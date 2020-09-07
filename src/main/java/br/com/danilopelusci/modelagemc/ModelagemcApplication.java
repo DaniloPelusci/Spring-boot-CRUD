@@ -13,6 +13,7 @@ import br.com.danilopelusci.modelagemc.domain.Cidade;
 import br.com.danilopelusci.modelagemc.domain.Cliente;
 import br.com.danilopelusci.modelagemc.domain.Endereco;
 import br.com.danilopelusci.modelagemc.domain.Estado;
+import br.com.danilopelusci.modelagemc.domain.ItemPedido;
 import br.com.danilopelusci.modelagemc.domain.Pagamento;
 import br.com.danilopelusci.modelagemc.domain.PagamentoComBoleto;
 import br.com.danilopelusci.modelagemc.domain.PagamentoComCartao;
@@ -25,6 +26,7 @@ import br.com.danilopelusci.modelagemc.repositories.CidadeRepository;
 import br.com.danilopelusci.modelagemc.repositories.ClienteRepository;
 import br.com.danilopelusci.modelagemc.repositories.EnderecoRepository;
 import br.com.danilopelusci.modelagemc.repositories.EstadoRepository;
+import br.com.danilopelusci.modelagemc.repositories.ItemPedidoRepository;
 import br.com.danilopelusci.modelagemc.repositories.PagamentoRepository;
 import br.com.danilopelusci.modelagemc.repositories.PedidoRepository;
 import br.com.danilopelusci.modelagemc.repositories.ProdutoRepository;
@@ -49,6 +51,8 @@ public class ModelagemcApplication implements CommandLineRunner {
 	private PedidoRepository pedidoRepository;
 	@Autowired
 	private PagamentoRepository pagaRepository;
+	@Autowired
+	private ItemPedidoRepository itemPedidoRepository;
 	
 	
 	
@@ -76,6 +80,7 @@ public class ModelagemcApplication implements CommandLineRunner {
 			
 		categoriaRepository.saveAll(Arrays.asList(cat1, cat2));
 		produtoRepository.saveAll(Arrays.asList(p1,p2,p3));
+		
 		//------------------
 		
 		Estado est1 = new Estado(null,"Minas Gerais");
@@ -125,6 +130,21 @@ public class ModelagemcApplication implements CommandLineRunner {
 	    pedidoRepository.saveAll(Arrays.asList(ped1,ped2));
 	    pagaRepository.saveAll(Arrays.asList(pagto1, pagto2));
 	    
+	    
+	    //----------------------------------------------------------------------
+	    
+	    ItemPedido ip1 = new ItemPedido(ped1, p1, 0.00 , 1, 2000.00);
+	    ItemPedido ip2 = new ItemPedido(ped1, p3, 0.00 , 2, 80.00);
+	    ItemPedido ip3 = new ItemPedido(ped2, p2, 0.00 , 1, 800.00);
+	    
+	    ped1.getItens().addAll(Arrays.asList(ip1,ip2));
+	    ped2.getItens().addAll(Arrays.asList(ip3));
+	    
+	    p1.getItens().addAll(Arrays.asList(ip1));
+	    p2.getItens().addAll(Arrays.asList(ip3));
+	    p3.getItens().addAll(Arrays.asList(ip2));
+	    
+	    itemPedidoRepository.saveAll(Arrays.asList(ip1,ip2,ip3));
 	    
 	    
 		
