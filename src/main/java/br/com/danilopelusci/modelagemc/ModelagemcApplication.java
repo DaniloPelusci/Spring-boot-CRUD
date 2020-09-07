@@ -1,5 +1,6 @@
 package br.com.danilopelusci.modelagemc;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,13 +13,20 @@ import br.com.danilopelusci.modelagemc.domain.Cidade;
 import br.com.danilopelusci.modelagemc.domain.Cliente;
 import br.com.danilopelusci.modelagemc.domain.Endereco;
 import br.com.danilopelusci.modelagemc.domain.Estado;
+import br.com.danilopelusci.modelagemc.domain.Pagamento;
+import br.com.danilopelusci.modelagemc.domain.PagamentoComBoleto;
+import br.com.danilopelusci.modelagemc.domain.PagamentoComCartao;
+import br.com.danilopelusci.modelagemc.domain.Pedido;
 import br.com.danilopelusci.modelagemc.domain.Produto;
+import br.com.danilopelusci.modelagemc.domain.enums.EstadoPagamento;
 import br.com.danilopelusci.modelagemc.domain.enums.TipoCliente;
 import br.com.danilopelusci.modelagemc.repositories.CategoriaRepository;
 import br.com.danilopelusci.modelagemc.repositories.CidadeRepository;
 import br.com.danilopelusci.modelagemc.repositories.ClienteRepository;
 import br.com.danilopelusci.modelagemc.repositories.EnderecoRepository;
 import br.com.danilopelusci.modelagemc.repositories.EstadoRepository;
+import br.com.danilopelusci.modelagemc.repositories.PagamentoRepository;
+import br.com.danilopelusci.modelagemc.repositories.PedidoRepository;
 import br.com.danilopelusci.modelagemc.repositories.ProdutoRepository;
 
 @SpringBootApplication
@@ -37,6 +45,10 @@ public class ModelagemcApplication implements CommandLineRunner {
 	private ClienteRepository clienteRepository;
 	@Autowired
 	private EnderecoRepository enderecoRepository;
+	@Autowired
+	private PedidoRepository pedidoRepository;
+	@Autowired
+	private PagamentoRepository pagaRepository;
 	
 	
 	
@@ -94,6 +106,24 @@ public class ModelagemcApplication implements CommandLineRunner {
 	    enderecoRepository.saveAll(Arrays.asList(e1, e2));
 		    
 	    
+	    //-----------------------------------------------------------------
+	    
+	    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+	    
+	    Pedido ped1 = new Pedido(null, sdf.parse("30/09/2017 10:32"), cli1, e1);
+	    Pedido ped2 = new Pedido(null, sdf.parse("10/10/2017 19:35"), cli1, e2);
+	    
+	    Pagamento pagto1 = new PagamentoComCartao(null,EstadoPagamento.QUITADO , ped1, 6);
+	    ped1.setPagamento(pagto1);
+	    
+	    Pagamento pagto2 = new PagamentoComBoleto(null, EstadoPagamento.PENDENTE, ped2, sdf.parse("20/07/2017 00:00"), null);
+	    ped2.setPagamento(pagto2);
+	    
+	    cli1.getPedidos().addAll(Arrays.asList(ped1,ped2));
+	    
+	    
+	    pedidoRepository.saveAll(Arrays.asList(ped1,ped2));
+	    pagaRepository.saveAll(Arrays.asList(pagto1, pagto2));
 	    
 	    
 	    
