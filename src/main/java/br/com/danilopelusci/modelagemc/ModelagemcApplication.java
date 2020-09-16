@@ -66,6 +66,14 @@ public class ModelagemcApplication implements CommandLineRunner {
 		
 		Categoria cat1 = new Categoria(null, "informatica");
 		Categoria cat2 = new Categoria(null, "escritorio");
+		Categoria cat3 = new Categoria(null, "cama mesa");
+		Categoria cat4 = new Categoria(null, "Mesa e cama");
+		Categoria cat5 = new Categoria(null, "Esporte");
+		Categoria cat6 = new Categoria(null, "jardinagem");
+		Categoria cat7 = new Categoria(null, "decoração");
+		Categoria cat8 = new Categoria(null, "perfumaria");
+		Categoria cat9 = new Categoria(null, "gotica nervosa");
+		Categoria cat10 = new Categoria(null, "Musica");
 		
 		Produto p1 = new Produto(null, "computador", 2000.0);
 		Produto p2 = new Produto(null, "Impressora", 800.0);
@@ -78,7 +86,7 @@ public class ModelagemcApplication implements CommandLineRunner {
 		p2.getCategorias().addAll(Arrays.asList(cat1,cat2));
 		p3.getCategorias().addAll(Arrays.asList(cat1));
 			
-		categoriaRepository.saveAll(Arrays.asList(cat1, cat2));
+		categoriaRepository.saveAll(Arrays.asList(cat1, cat2,cat3, cat4,cat5, cat6,cat7, cat8,cat9, cat10));
 		produtoRepository.saveAll(Arrays.asList(p1,p2,p3));
 		
 		//------------------
