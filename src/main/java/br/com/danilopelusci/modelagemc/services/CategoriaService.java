@@ -8,10 +8,10 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
-import org.springframework.data.domain.jaxb.SpringDataJaxb.PageRequestDto;
 import org.springframework.stereotype.Service;
 
 import br.com.danilopelusci.modelagemc.domain.Categoria;
+import br.com.danilopelusci.modelagemc.dto.CategoriaDTO;
 import br.com.danilopelusci.modelagemc.repositories.CategoriaRepository;
 import br.com.danilopelusci.modelagemc.services.exceptions.DataIntegrityException;
 import br.com.danilopelusci.modelagemc.services.exceptions.ObjectNotFoundException;
@@ -59,5 +59,8 @@ public class CategoriaService {
 		return repo.findAll(pageRequest);
 		
 	}
+	 public Categoria fromDTO(CategoriaDTO objDTO) {
+		 return new Categoria(objDTO.getId(), objDTO.getNome());
+	 }
 
 }
