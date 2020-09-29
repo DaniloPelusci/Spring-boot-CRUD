@@ -32,8 +32,9 @@ public class ClienteService {
 		
 		Cliente newObj = find(obj.getId());
 		updateData( newObj , obj);
-		return repo.save(obj);
+		return repo.save(newObj);
 	}
+	
 	public void delete(Integer id) {
 		find(id);
 		try {		
