@@ -6,12 +6,16 @@ import java.util.List;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
+import br.com.danilopelusci.modelagemc.domain.Cliente;
 import br.com.danilopelusci.modelagemc.domain.enums.TipoCliente;
 import br.com.danilopelusci.modelagemc.dto.ClienteNewDTO;
+import br.com.danilopelusci.modelagemc.repositories.ClienteRepository;
 import br.com.danilopelusci.modelagemc.resource.exception.FieldMessage;
 import br.com.danilopelusci.modelagemc.services.validation.utils.BR;
 
 public class ClienteInsertValidator implements ConstraintValidator<ClienteInsert, ClienteNewDTO> {
+	private ClienteRepository repo;
+	
 	@Override
 	public void initialize(ClienteInsert ann) {
 	}
@@ -27,6 +31,10 @@ public class ClienteInsertValidator implements ConstraintValidator<ClienteInsert
 			list.add(new FieldMessage("cpfOuCnpj", "CNPJ inválido"));
 		}
 		
+		Cliente aux = repo.findByEmail(objDto.getEmail());
+		if(aux!=null) {
+			list.add(new FieldMessage("email", "email já existente"));
+		}
 		
 		// inclua os testes aqui, inserindo erros na lista
 
