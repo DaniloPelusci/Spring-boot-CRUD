@@ -17,7 +17,6 @@ import br.com.danilopelusci.modelagemc.domain.Endereco;
 import br.com.danilopelusci.modelagemc.domain.enums.TipoCliente;
 import br.com.danilopelusci.modelagemc.dto.ClienteDTO;
 import br.com.danilopelusci.modelagemc.dto.ClienteNewDTO;
-import br.com.danilopelusci.modelagemc.repositories.CidadeRepository;
 import br.com.danilopelusci.modelagemc.repositories.ClienteRepository;
 import br.com.danilopelusci.modelagemc.repositories.EnderecoRepository;
 import br.com.danilopelusci.modelagemc.services.exceptions.DataIntegrityException;

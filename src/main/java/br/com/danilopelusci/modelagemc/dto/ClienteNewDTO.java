@@ -2,23 +2,45 @@ package br.com.danilopelusci.modelagemc.dto;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+
+import org.hibernate.validator.constraints.Length;
+
+import br.com.danilopelusci.modelagemc.services.validation.ClienteInsert;
+
+@ClienteInsert
 public class ClienteNewDTO implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	//-----------------------------------dados cliente
+	
+	@NotEmpty(message = "Preenchimento obrigatório")
+	@Length(min = 5, max = 80, message = "o tamanho deve ser entre 5 e 80 caracteres")
+
 	private String nome;
+	
+	@NotEmpty(message = "Preenchimento obrigatório")
+	@Email(message = "Email inválido")
 	private String email;
+	
+	@NotEmpty(message = "Preenchimento obrigatório")
 	private String cpfOUCnpj;
 	private Integer tipo;
 	
 	//-------------------------------------dados endereco
+	@NotEmpty(message = "Preenchimento obrigatório")
 	private String logradouro;
+	@NotEmpty(message = "Preenchimento obrigatório")
 	private String numero;
 	private String complemento;
 	private String bairro;
+	@NotEmpty(message = "Preenchimento obrigatório")
 	private String cep;
 	
+	
 	//-------------------------------------dados telefone
+	@NotEmpty(message = "Preenchimento obrigatório")
 	private String telefone1;
 	private String telefone2;
 	private String telefone3;
