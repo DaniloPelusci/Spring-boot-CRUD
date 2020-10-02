@@ -6,6 +6,8 @@ import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import br.com.danilopelusci.modelagemc.repositories.doublee;
 @Entity
 public class ItemPedido implements Serializable{
 	
@@ -18,6 +20,10 @@ public class ItemPedido implements Serializable{
 	private Double desconto;
 	private Integer quantidade;
 	private Double preco;
+	public double getSubTotal() {
+		return (preco - desconto)*quantidade;
+	}
+
 	public ItemPedido() {
 		super();
 	}
@@ -29,6 +35,8 @@ public class ItemPedido implements Serializable{
 		this.quantidade = quantidade;
 		this.preco = preco;
 	}
+	
+	
 	@JsonIgnore
 	public Pedido getPedido() {
 		return id.getPedido();
