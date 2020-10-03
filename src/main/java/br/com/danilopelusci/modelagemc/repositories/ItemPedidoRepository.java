@@ -8,5 +8,5 @@ import br.com.danilopelusci.modelagemc.domain.ItemPedido;
 @Repository
 public interface ItemPedidoRepository extends JpaRepository<ItemPedido, Integer> {
 	
-
+	
 }
