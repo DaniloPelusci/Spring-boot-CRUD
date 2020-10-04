@@ -106,6 +106,9 @@ public class DBService {
 		Estado est1 = new Estado(null,"Minas Gerais");
 	    Estado est2 = new Estado(null, "Sao Paulo");
 	    
+
+
+	    
 	    Cidade c1 = new Cidade(null, "uberlandia", est1);
 	    Cidade c2 = new Cidade(null, "Sao Paulo", est2);
 	    Cidade c3 = new Cidade(null, "Campinas", est2);
