@@ -2,8 +2,6 @@ package br.com.danilopelusci.modelagemc.config;
 
 import java.text.ParseException;
 
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
