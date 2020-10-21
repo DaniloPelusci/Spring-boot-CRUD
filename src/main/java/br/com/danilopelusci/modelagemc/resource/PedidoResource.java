@@ -21,7 +21,7 @@ import br.com.danilopelusci.modelagemc.services.PedidoService;
 public class PedidoResource {
 	@Autowired
 	private PedidoService service;
-	//112132132
+	
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<?> find(@PathVariable Integer id) {
 		
@@ -34,8 +34,9 @@ public class PedidoResource {
 	
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<Void> insert(@Valid @RequestBody Pedido obj){
-		//11111
+		
 		obj = service.insert(obj);
+		System.out.println(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
 				.path("/{id}").buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).build();
