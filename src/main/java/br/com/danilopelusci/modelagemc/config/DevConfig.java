@@ -9,6 +9,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
 import br.com.danilopelusci.modelagemc.services.DBService;
+import br.com.danilopelusci.modelagemc.services.EmailService;
+import br.com.danilopelusci.modelagemc.services.MockEmailService;
 
 @Configuration
 @Profile( "dev")
@@ -28,6 +30,14 @@ public class DevConfig {
 		dbService.instatiateTesteDatabase();
 		
 		return true;
+	}
+	/*@Bean
+	public EmailService emailService() {
+		return new SmtpEmailService();
+	}*/
+	@Bean
+	public EmailService emailService() {
+		return new MockEmailService();
 	}
 
 }
