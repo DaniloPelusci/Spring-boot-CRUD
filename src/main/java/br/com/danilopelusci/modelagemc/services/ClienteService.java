@@ -15,11 +15,14 @@ import org.springframework.transaction.annotation.Transactional;
 import br.com.danilopelusci.modelagemc.domain.Cidade;
 import br.com.danilopelusci.modelagemc.domain.Cliente;
 import br.com.danilopelusci.modelagemc.domain.Endereco;
+import br.com.danilopelusci.modelagemc.domain.enums.Perfil;
 import br.com.danilopelusci.modelagemc.domain.enums.TipoCliente;
 import br.com.danilopelusci.modelagemc.dto.ClienteDTO;
 import br.com.danilopelusci.modelagemc.dto.ClienteNewDTO;
 import br.com.danilopelusci.modelagemc.repositories.ClienteRepository;
 import br.com.danilopelusci.modelagemc.repositories.EnderecoRepository;
+import br.com.danilopelusci.modelagemc.security.UserSS;
+import br.com.danilopelusci.modelagemc.services.exceptions.AuthorizationException;
 import br.com.danilopelusci.modelagemc.services.exceptions.DataIntegrityException;
 import br.com.danilopelusci.modelagemc.services.exceptions.ObjectNotFoundException;
 
@@ -36,6 +39,10 @@ public class ClienteService {
 	
 	
 	public Cliente find(Integer id) {
+		UserSS user = UserService.authenticated();
+		if(user==null || !user.hasRole(Perfil.ADMIN)&& !id.equals(user.getid())) {
+			throw new AuthorizationException("Acesso negado");
+		}
 		Optional<Cliente> obj = repo.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
 		"Objeto não encontrado! Id: " + id + ", Tipo: " + Cliente.class.getName()));
