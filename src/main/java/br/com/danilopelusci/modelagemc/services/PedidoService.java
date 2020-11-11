@@ -4,9 +4,13 @@ import java.util.Date;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import br.com.danilopelusci.modelagemc.domain.Cliente;
 import br.com.danilopelusci.modelagemc.domain.ItemPedido;
 import br.com.danilopelusci.modelagemc.domain.PagamentoComBoleto;
 import br.com.danilopelusci.modelagemc.domain.Pedido;
@@ -14,6 +18,8 @@ import br.com.danilopelusci.modelagemc.domain.enums.EstadoPagamento;
 import br.com.danilopelusci.modelagemc.repositories.ItemPedidoRepository;
 import br.com.danilopelusci.modelagemc.repositories.PagamentoRepository;
 import br.com.danilopelusci.modelagemc.repositories.PedidoRepository;
+import br.com.danilopelusci.modelagemc.security.UserSS;
+import br.com.danilopelusci.modelagemc.services.exceptions.AuthorizationException;
 import br.com.danilopelusci.modelagemc.services.exceptions.ObjectNotFoundException;
 
 @Service
@@ -64,11 +70,22 @@ public class PedidoService {
 			ip.setProduto(produtoService.find(ip.getProduto().getId()));
 			ip.setPreco(ip.getProduto().getPreco());
 			ip.setPedido(obj);
-		}
+		} 
 		itemPedidoRepository.saveAll(obj.getItens());
 		emailService.sendOrderConfirmatilEmail(obj);
 		return obj;
 		
 	}
-
+	public Page<Pedido> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
+		UserSS user = UserService.authenticated();
+		if(user == null){
+			throw new AuthorizationException("acesso negado");
+			
+		}
+		
+		
+		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
+		Cliente cliente = clienteService.find(user.getid());
+		return repo.findByCliente(cliente, pageRequest);
+	}
 }
